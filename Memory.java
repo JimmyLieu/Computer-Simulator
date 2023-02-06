@@ -103,4 +103,11 @@ public class Memory {
     void write(int address, String data) {
         memory[address] = Integer.parseInt(data, 16);
     }
+
+    public static int get(int pC) {
+        return 0;
+    }
+
+    public static void set(int operand, int aC) {
+    }
 }

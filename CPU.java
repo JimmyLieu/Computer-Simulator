@@ -12,7 +12,7 @@ public class CPU {
     public void run() {
         while (true) {
             fetch();
-            executeInstruction();
+            executeInstruction(AC, AC);
         }
     }
 
@@ -23,17 +23,18 @@ public class CPU {
         // stored in the IR
         // PC is incremented by 1 so that the next instruction can be fetched.
         // Retrieves value stored at the memory address specified by the PC.
-        IR = memory.get(PC);
+        IR = Memory.get(PC);
         PC++;
+        
     }
 
     public void executeInstruction(int opcode, int operand) {
         switch (opcode) {
             case 0x0001: // Load AC from memory
-                AC = memory.get(operand);
+                AC = Memory.get(operand);
                 break;
             case 0x0010: // Store AC to memory
-                memory.set(operand, AC);
+                Memory.set(operand, AC);
                 break;
             case 0x0011: // Load AC from REG
                 AC = REG;
