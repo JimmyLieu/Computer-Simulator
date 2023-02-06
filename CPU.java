@@ -2,39 +2,53 @@ import java.io.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.Stack;
+import java.io.FileWriter;
 
 public class CPU {
-    private int PC, IR, AC, REG;
+    //PC, IR, AC, REG, Instruction Counter, Subroutine number tracker
+    public int PC, IR, AC, REG;
 
-    // Methods
-    // Implements the fetch and execute cycle. The cycle runs until the halt
-    // instructions is encountered.
-    public void run() {
-        while (true) {
+    //Methods 
+    public static int toInt(String hex){
+        return Integer.parseInt(hex,16);
+    }
+    public static String intToHex(int num) {
+        return Integer.toHexString(num);
+      }
+    //Fetch and execute cycle
+    void run(){
+        while(true){
             fetch();
-            executeInstruction(AC, AC);
+            execute();
         }
     }
-
-    // Fetch reads an instruction from memory at the address stored in PC and stores
-    // it in IR, then increments PC.
-    public void fetch() {
-        // Instruction is located at the memory address stored in PC is being read and
-        // stored in the IR
-        // PC is incremented by 1 so that the next instruction can be fetched.
-        // Retrieves value stored at the memory address specified by the PC.
-        IR = Memory.get(PC);
-        PC++;
+    //fetch instructions from PC and store in IR
+    void fetch(){
+        //Read data from Memory at address PC and store in IR
         
+        //Increment PC
+
     }
 
+    //execute instructions stored in IR
+    void execute(){
+        //Store opcode and operand seperately
+        //Increment instruction counter
+        //Run commands according to opcode(use switch statement)
+    }
+
+    /**
+     * @param opcode
+     * @param operand
+     */
     public void executeInstruction(int opcode, int operand) {
         switch (opcode) {
             case 0x0001: // Load AC from memory
-                AC = Memory.get(operand);
+                AC = toInt(Memory.get(operand));
                 break;
             case 0x0010: // Store AC to memory
-                Memory.set(operand, AC);
+                Memory.set(AC);
                 break;
             case 0x0011: // Load AC from REG
                 AC = REG;
@@ -43,7 +57,7 @@ public class CPU {
                 REG = AC;
                 break;
             case 0x0101: // Add to AC from memory
-                AC += memory.get(operand);
+                AC += toInt(Memory.get(operand));
                 break;
             case 0x0110: // Load REG with operand
                 REG = operand;
@@ -61,30 +75,50 @@ public class CPU {
                 AC /= REG;
                 break;
             case 0x1011: // Jump to subroutine starting at the address
-                stack.push(PC);
-                stack.push(IR);
+
+               /**  Stack.push(PC);
+                Stack.push(IR);
                 stack.push(AC);
-                stack.push(REG);
+                Stack.push(REG);
                 PC = operand;
-                break;
+                break;*/
             case 0x1100: // Return from the subroutine
-                REG = stack.pop();
-                AC = stack.pop();
-                IR = stack.pop();
-                PC = stack.pop();
+                REG = Stack.pop();
+                AC = Stack.pop();
+                IR = Stack.pop();
+                PC = Stack.pop();
                 break;
-            case 0x1111: // Halt
+            case 0x1111: // End
                 halt();
                 break;
 
         }
+       
     }
-    File outputFile = new File ("output.txt");
-    try (FileWriter writer = new FileWriter(outputFile)){
-        writer.write(" ");
-    }
-    catch (IOException e) {
-        System.out.println("Error " + e.getMessage());
-    }
+       /**  class WriteToFile    {
+            public static void main (String[] args) {
+                try {
+                    FileWriter myWriter = new FileWriter("output.txt");
+                    myWriter.write("======Before Return from Subroutine 1 Status======");
+                    myWriter.write("=============Stack Status=============");
+                    myWriter.write(""");
+                    myWriter.write("=============Registers & Memory Status=============");
+    
+                    
+                    myWriter.write("======Before Return from Subroutine 2 Status======");
+                    myWriter.write("=============Stack Status=============");
+                    myWriter.write("=============Registers & Memory Status=============");
+                    myWriter.write("======End of Program Status======");
+                    myWriter.write("")
+
+
+                    myWriter.close();
+
+                } catch (IOException e) {
+                    System.out.println("Error");
+                }
+            }
+            
+        }*/
 }
 }
