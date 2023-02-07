@@ -36,8 +36,8 @@ public class Memory {
             //line = line.substring(line.indexOf(".")+1);
             line = line.substring(line.indexOf(".") +2 , line.indexOf(";"));
             System.out.println(line);
-            String opCode = line.substring(4, 5);
-            System.out.println("opCode: "+opCode);
+            String opcode = line.substring(4, 5);
+            System.out.println("opCode: "+opcode);
             String memoryAddress = line.substring(0, 4);
             System.out.println("Memory Address: "+memoryAddress);
             String opInstruction = line.substring(5, 9);

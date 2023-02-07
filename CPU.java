@@ -6,8 +6,10 @@ import java.io.FileWriter;
 
 public class CPU {
     //PC, IR, AC, REG, Instruction Counter, Subroutine number tracker
-    public static int PC, IR, AC, REG;
-
+    public static int PC, IR, AC, REG;)
+    public static int instructionCounter = 0;
+    static String [] opcodes;
+    static String [] operands;
     //Methods 
     public static int toInt(String hex){
         return Integer.parseInt(hex,16);
@@ -26,16 +28,19 @@ public class CPU {
     static void fetch(){
         //Read data from Memory at address PC and store in IR
         //Increment PC
+        PC++;
 
     }
     //execute instructions stored in IR
     static void execute(){
         //Store opcode and operand seperately
         //Increment instruction counter
+        instructionCounter++;
         //Run commands according to opcode(use switch statement)
     }
     static public void executeInstruction(int opcode, int operand) {
-        switch (opcode) {
+        while (instructionCounter < opcodes.length){
+            switch (operand) {
             case 0x0001: // Load AC from memory
                 AC = toInt(Memory.read(operand));
                 break;
@@ -86,7 +91,7 @@ public class CPU {
                 System.exit(1);
         }
     }
-    
+}
     public static void load() {
     }
        /**  class WriteToFile    {
