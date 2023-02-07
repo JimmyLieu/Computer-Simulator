@@ -2,12 +2,11 @@ import java.io.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.Stack;
 import java.io.FileWriter;
 
 public class CPU {
     //PC, IR, AC, REG, Instruction Counter, Subroutine number tracker
-    public int PC, IR, AC, REG;
+    public static int PC, IR, AC, REG;
 
     //Methods 
     public static int toInt(String hex){
@@ -17,38 +16,31 @@ public class CPU {
         return Integer.toHexString(num);
       }
     //Fetch and execute cycle
-    void run(){
+    static void start(){
         while(true){
             fetch();
             execute();
         }
     }
     //fetch instructions from PC and store in IR
-    void fetch(){
+    static void fetch(){
         //Read data from Memory at address PC and store in IR
-        
         //Increment PC
 
     }
-
     //execute instructions stored in IR
-    void execute(){
+    static void execute(){
         //Store opcode and operand seperately
         //Increment instruction counter
         //Run commands according to opcode(use switch statement)
     }
-
-    /**
-     * @param opcode
-     * @param operand
-     */
-    public void executeInstruction(int opcode, int operand) {
+    static public void executeInstruction(int opcode, int operand) {
         switch (opcode) {
             case 0x0001: // Load AC from memory
-                AC = toInt(Memory.get(operand));
+                AC = toInt(Memory.read(operand));
                 break;
             case 0x0010: // Store AC to memory
-                Memory.set(AC);
+                Memory.write(intToHex(AC), operand);
                 break;
             case 0x0011: // Load AC from REG
                 AC = REG;
@@ -57,7 +49,7 @@ public class CPU {
                 REG = AC;
                 break;
             case 0x0101: // Add to AC from memory
-                AC += toInt(Memory.get(operand));
+                AC += toInt(Memory.read(operand));
                 break;
             case 0x0110: // Load REG with operand
                 REG = operand;
@@ -75,25 +67,27 @@ public class CPU {
                 AC /= REG;
                 break;
             case 0x1011: // Jump to subroutine starting at the address
-
-               /**  Stack.push(PC);
-                Stack.push(IR);
-                stack.push(AC);
-                Stack.push(REG);
+                Stack.push(intToHex(PC));              
+                Stack.push(intToHex(IR));
+                Stack.push(intToHex(AC));
+                Stack.push(intToHex(REG));
                 PC = operand;
-                break;*/
+                break;
             case 0x1100: // Return from the subroutine
-                REG = Stack.pop();
-                AC = Stack.pop();
-                IR = Stack.pop();
-                PC = Stack.pop();
+                REG = toInt(Stack.pop());
+                AC = toInt(Stack.pop());
+                IR = toInt(Stack.pop());
+                PC = toInt(Stack.pop());
                 break;
             case 0x1111: // End
-                halt();
+                System.exit(0);
                 break;
-
+            default :
+                System.exit(1);
         }
-       
+    }
+    
+    public static void load() {
     }
        /**  class WriteToFile    {
             public static void main (String[] args) {
@@ -120,5 +114,6 @@ public class CPU {
             }
             
         }*/
+    
 }
-}
+

@@ -1,22 +1,19 @@
-import java.util.ArrayList;
 class Stack {
-    public int stackBottom;
-    public int stackSize;
-    /**
-     *
-     */
-    public ArrayList<> test;
+    static int bottom = 0x3FF;
+    static int size = 0;
+    public static void push(String data) {
+        Memory.write(data, bottom - size);
+        size++;
 
-    public Stack() {
-        this.stackBottom = 0;
-        this.stackSize = 0;
-        this.test = new ArrayList<T>();
+         }
+
+    public static String pop(){
+        size--; 
+         String temp = Memory.read(bottom - size);
+        Memory.write(null, bottom - size);
+        return temp;
+    }
     }
 
-    public void push(String str) {
-       this.list.add(str);
-    }
-    public String pop(){
 
-    }
-}
+
