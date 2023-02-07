@@ -4,8 +4,7 @@ class Stack {
     public static void push(String data) {
         Memory.write(data, bottom - size);
         size++;
-
-         }
+    }
 
     public static String pop(){
         size--; 

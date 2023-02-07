@@ -32,12 +32,20 @@ public class Memory {
             if (period == -1){
             }
             else{
+                
             //line = line.substring(line.indexOf(".")+1);
-            line = line.substring(line.indexOf(".") + 1 , line.indexOf(";"));
+            line = line.substring(line.indexOf(".") +2 , line.indexOf(";"));
             System.out.println(line);
+            String opCode = line.substring(4, 5);
+            System.out.println("opCode: "+opCode);
+            String memoryAddress = line.substring(0, 4);
+            System.out.println("Memory Address: "+memoryAddress);
+            String opInstruction = line.substring(5, 9);
+            System.out.println("Op Instruction: " +opInstruction);
+            System.out.println("");
+        
             }
         }
-           
 
         scanner.close();
         }catch (FileNotFoundException e){
@@ -47,7 +55,8 @@ public class Memory {
 
     
     public static void write(String data, int i) {
-
+        //Write the data into the array at the address given by the first 3 digit numbers
+        //Take in address and at memory location and data i want to put in there
     }
     public static String read(int i) {
         return null;
